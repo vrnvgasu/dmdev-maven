@@ -37,6 +37,9 @@
 
     <!--Добавляем свои свойства-->
     <spring.version>5.0.5.RELEASE</spring.version>
+
+    <!--Переопределим эту переменную в profiles -->
+    <app.env>dev</app.env>
   </properties>
 
   <!--По умолчанию модули не наследуют зависимости из dependencyManagement-->
@@ -244,6 +247,51 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <profiles>
+    <!--в профиле можем переопределять почти все блоки: build, plugins и тд-->
+    <profile>
+      <id>prod</id>
+      <activation>
+        <!--По умолчанию-->
+<!--        <activeByDefault>true</activeByDefault>-->
+        <!--можно от операционной системы. Хотя на практике странно так делать-->
+<!--        <os>-->
+<!--          <family>windows</family>-->
+<!--        </os>-->
+        <!--в зависимости от версии java-->
+<!--        <jdk>15</jdk>-->
+        <!--если существует такой-то файл-->
+<!--        <file>-->
+<!--          <exists>${basedir}/pom.xml</exists>-->
+<!--        </file>-->
+        <!--Через системные переменные. Вот это интересно-->
+        <property>
+          <!--Передаем флаг -Dtest.prop=example
+          Пример: mvn help:active-profiles -Dtest.prop=example-->
+          <name>test.prop</name> <!--ключ-->
+          <value>example</value> <!--значение-->
+        </property>
+      </activation>
+      <properties>
+        <app.env>prod</app.env><!--переопределили-->
+        <example>test-test</example><!--добавили-->
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.10.1</version>
+            <configuration>
+              <debug>false</debug>
+              <optimize>true</optimize>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <distributionManagement>
     <snapshotRepository>
