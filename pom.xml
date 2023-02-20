@@ -25,6 +25,11 @@
   <url>http://www.example.com</url>
 
   <!--глобальные переменные. Можем ссылаться на них-->
+  <!-- project.* -->
+  <!-- settings.* - настройки MAVEN в .m2/repository-->
+  <!-- env.* - переменные окружения. К примеру: env.JAVA_HOME -->
+  <!-- System.getProperty | Передаем в программу через флаг -D -->
+  <!-- собственные переменные. К примеру: ${spring.version} -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
@@ -87,6 +92,16 @@
 
   <!--BUILD SETTINGS-->
   <build>
+
+    <!--Конфигурируем работу с ресурсами-->
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+        <!--true - подставлять выражения ${*} в файлы ресурсов}-->
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+
     <!--Меняет название архива-->
     <!--Не будем указывать, т.к. тогда в модулях все будет называться также ROOT-->
 <!--    <finalName>ROOT</finalName>-->
