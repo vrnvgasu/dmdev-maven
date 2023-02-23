@@ -35,13 +35,62 @@
   <build>
     <plugins>
       <plugin>
+        <!--Собирает одну джарку со всеми зависимостями-->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.3.0</version>
+        <executions>
+          <execution>
+            <id>my-single-jar</id>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <!--descriptor - Как распаковывать зависимости в джар-->
+              <descriptorRefs>jar-with-dependencies</descriptorRefs>
+              <archive>
+                <manifest>
+                  <!--Была проблема, когда классы main в разных
+                  модулях назывались одинаково-->
+                  <mainClass>ru.edu.AppService</mainClass>
+                </manifest>
+              </archive>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <id>my-create-lib</id>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <phase>prepare-package</phase>
+            <!--кидаем все зависимости в target/lib-->
+            <configuration>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.3.0</version>
         <configuration>
           <archive>
             <manifest>
-              <mainClass>ru.edu.App</mainClass>
+              <mainClass>ru.edu.AppService</mainClass>
+
+              <!--Где ищем зависимости.
+              Сами зависимости добавляем в maven-dependency-plugin-->
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>lib/</classpathPrefix>
             </manifest>
           </archive>
         </configuration>

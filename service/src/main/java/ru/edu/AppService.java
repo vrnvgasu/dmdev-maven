@@ -2,11 +2,7 @@ package ru.edu;
 
 import ru.edu.service.service.UserService;
 
-/**
- * Hello world!
- *
- */
-public class App 
+public class AppService
 {
     public static void main( String[] args )
     {
