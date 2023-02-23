@@ -10,7 +10,7 @@
   <!--уникальный идентификатор проекта из трех ключей-->
   <groupId>ru.edu</groupId>
   <artifactId>first-maven</artifactId>
-  <version>1.0.0.-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <modules>
     <module>database</module>
     <module>service</module>
@@ -21,8 +21,13 @@
 
   <!--участок с метаинформацией: название, ссылка, контрибьютеры, лицензия и тд-->
   <name>first-maven</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+
+  <!--ссылки на репозиторий для релиза-->
+  <scm>
+    <connection>scm:git:git@github.com:vrnvgasu/dmdev-maven.git</connection>
+    <developerConnection>scm:git:git@github.com:vrnvgasu/dmdev-maven.git</developerConnection>
+    <url>https://github.com/vrnvgasu/dmdev-maven</url>
+  </scm>
 
   <!--глобальные переменные. Можем ссылаться на них-->
   <!-- project.* -->
@@ -95,6 +100,15 @@
 
   <!--BUILD SETTINGS-->
   <build>
+
+    <plugins>
+      <!--для релизов в гит-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>3.0.0-M1</version>
+      </plugin>
+    </plugins>
 
     <!--Конфигурируем работу с ресурсами-->
     <resources>
