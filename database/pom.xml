@@ -27,4 +27,26 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>ru.edu</groupId>
+        <artifactId>hello-plugin</artifactId>
+        <version>1.0.1-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <!--Привяжем вызов плагина к фазе-->
+            <goals>
+              <goal>hello</goal>
+            </goals>
+            <phase>validate</phase>
+          </execution>
+        </executions>
+<!--        <configuration>-->
+<!--          <message>Message from config!!!</message>-->
+<!--        </configuration>-->
+      </plugin>
+    </plugins>
+  </build>
 </project>
